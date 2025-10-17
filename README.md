@@ -1,52 +1,100 @@
-# Student Q&A System - Team Project Phase 2 (TP2)
+# Phase-2 Project - CSE 360 Question Management System# Student Q&A System - Team Project Phase 2 (TP2)
 
-## Overview
 
-In Team Project Phase 2 we will make a **Student Q&A System.**
+
+## Overview## Overview
+
+
+
+This project contains a JavaFX-based Student Q&A System for CSE 360.In Team Project Phase 2 we will make a **Student Q&A System.**
+
 This system allows students to:
 
+## Organized Project Structure
+
 - Ask questions and provide answers.
-- Search for relevant questions and answers.
-- Suggest clarifications on existing questions or answers.
+
+- **Application/** - Main JavaFX application (question management system)- Search for relevant questions and answers.
+
+- **HW2.1/** - Eclipse project files and configuration- Suggest clarifications on existing questions or answers.
+
 - Mark an answer as accepted when it resolves the issue.
+
+## Features
 
 In this project we will be building on **Individual Homework 2 (HW2)** and Team Project Phase 1 which uses functionality, including:
 
-- Search functionality for finding relevant questions and answers.
-- The ability to suggest clarifications for better understanding.
-- A feature to mark an answer as the accepted solution.
-- Enhanced CRUD operations with validation.
-- Automated and manual testing to ensure system reliability.
+### Core Functionality
+
+- User authentication and account management- Search functionality for finding relevant questions and answers.
+
+- Question submission and management  - The ability to suggest clarifications for better understanding.
+
+- Answer submission and validation- A feature to mark an answer as the accepted solution.
+
+- Real-time search and filtering- Enhanced CRUD operations with validation.
+
+- Database integration with H2- Automated and manual testing to ensure system reliability.
+
+- Multiple user roles (Student, Admin, Reviewer, Staff)
 
 ---
 
-## Features Implemented
+### CRUD Operations
+
+- Create, Read, Update, and Delete for questions and answers## Features Implemented
+
+- Input validation prevents empty titles, descriptions, and answers
 
 ### 1. CRUD Operations
 
-- Create, Read, Update, and Delete (CRUD) for questions and answers.
-- Input validation prevents empty titles, descriptions, and answers.
+### Search & Management
 
-### 2. Searching for Questions & Answers
+- Search functionality for finding relevant questions and answers- Create, Read, Update, and Delete (CRUD) for questions and answers.
 
-- Students can search for questions by ID
+- Ability to suggest clarifications for better understanding- Input validation prevents empty titles, descriptions, and answers.
+
+- Feature to mark an answer as the accepted solution
+
+- Enhanced CRUD operations with validation### 2. Searching for Questions & Answers
+
+
+
+## Running the Application- Students can search for questions by ID
+
 - Searching allows students to find existing solutions and avoid duplicate questions.
 
-### 3. Suggesting Clarifications
+1. Navigate to the `Application/` directory
 
-- Students can submit clarification requests on questions or answers.
+2. Use the following command in PowerShell:### 3. Suggesting Clarifications
 
-### 4. Marking an Answer as Accepted
 
-- Students can mark an answer as Accepted to show that it resolved the original question.
+
+```powershell- Students can submit clarification requests on questions or answers.
+
+java --module-path .\javafx-sdk\javafx-sdk-24.0.2\lib --add-modules javafx.controls,javafx.fxml -cp ".\bin;.\lib\h2-2.2.224.jar" application.StartCSE360
+
+```### 4. Marking an Answer as Accepted
+
+
+
+## Requirements- Students can mark an answer as Accepted to show that it resolved the original question.
+
 - Accepted answers are highlighted so that future users can quickly find solutions.
 
-### 5. Input Validation & Error Handling
+- Java 24
+
+- JavaFX 24.0.2 (included in project)### 5. Input Validation & Error Handling
+
+- H2 Database (included in project)
 
 - Ensures questions and answers cannot be blank.
-- Displays appropriate error messages for invalid operations.
 
-### 6. Automated & Manual Testing
+## Author- Displays appropriate error messages for invalid operations.
+
+
+
+Jose Mendez (jrmend13@asu.edu)### 6. Automated & Manual Testing
 
 - GUI tests validate CRUD operations and input validation.
 - Console output logs confirm correct system behavior.
