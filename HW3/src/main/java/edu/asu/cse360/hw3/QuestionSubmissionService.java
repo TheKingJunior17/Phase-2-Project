@@ -1,0 +1,95 @@
+package edu.asu.cse360.hw3;
+
+/**
+ * Service for handling question submission validation and processing.
+ * 
+ * <p>This service provides comprehensive question submission functionality including
+ * input validation, content sanitization, and database persistence operations.</p>
+ * 
+ * @author [Your Name]
+ * @version 1.0.0
+ * @since 2025-11-02
+ */
+public class QuestionSubmissionService {
+    
+    private java.sql.Connection connection;
+    
+    public QuestionSubmissionService(java.sql.Connection connection) {
+        this.connection = connection;
+    }
+    
+    public ValidationResult submitQuestion(QuestionSubmissionRequest request) {
+        try {
+            // Validate authorization
+            if (!isAuthorized(request.getUserRole())) {
+                return ValidationResult.invalid("Insufficient permissions to submit questions");
+            }
+            
+            // Validate input
+            java.util.List<String> errors = validateInput(request);
+            if (!errors.isEmpty()) {
+                return ValidationResult.invalid(errors);
+            }
+            
+            // Sanitize content
+            String sanitizedTitle = sanitizeContent(request.getTitle());
+            String sanitizedDescription = sanitizeContent(request.getDescription());
+            
+            // Persist to database (simulated)
+            Integer questionId = persistQuestion(sanitizedTitle, sanitizedDescription, request);
+            
+            return ValidationResult.valid(questionId);
+            
+        } catch (Exception e) {
+            return ValidationResult.invalid("System error occurred during submission");
+        }
+    }
+    
+    private boolean isAuthorized(String role) {
+        return !"GUEST".equals(role) && !"SUSPENDED".equals(role) && !"BANNED".equals(role);
+    }
+    
+    private java.util.List<String> validateInput(QuestionSubmissionRequest request) {
+        java.util.List<String> errors = new java.util.ArrayList<>();
+        
+        // Title validation
+        if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
+            errors.add("Title cannot be empty");
+        } else if (request.getTitle().trim().length() < 5) {
+            errors.add("Title must be at least 5 characters");
+        } else if (request.getTitle().length() > 200) {
+            errors.add("Title exceeds maximum length");
+        } else if (containsInvalidCharacters(request.getTitle())) {
+            errors.add("Title contains invalid characters");
+        }
+        
+        // Description validation
+        if (request.getDescription() == null || request.getDescription().trim().isEmpty()) {
+            errors.add("Description cannot be empty");
+        } else if (request.getDescription().trim().length() < 10) {
+            errors.add("Description must be at least 10 characters");
+        } else if (request.getDescription().length() > 2000) {
+            errors.add("Description exceeds maximum length");
+        } else if (containsInvalidCharacters(request.getDescription())) {
+            errors.add("Description contains invalid characters");
+        }
+        
+        return errors;
+    }
+    
+    private boolean containsInvalidCharacters(String content) {
+        return content.contains("<script>") || content.contains("javascript:") || 
+               content.contains("onerror=") || content.contains("onclick=");
+    }
+    
+    private String sanitizeContent(String content) {
+        if (content == null) return null;
+        return content.replaceAll("<[^>]*>", "").trim();
+    }
+    
+    private Integer persistQuestion(String title, String description, QuestionSubmissionRequest request) 
+            throws java.sql.SQLException {
+        // Simulate database insertion
+        return 1001; // Mock generated ID
+    }
+}

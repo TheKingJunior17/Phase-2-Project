@@ -1,0 +1,155 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'edu.asu.cse360'
+version = '1.0.0'
+description = 'HW3 - Automated Testing Assignment'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5 for testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.0'
+    
+    // Mockito for mocking
+    testImplementation 'org.mockito:mockito-core:5.6.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.6.0'
+    
+    // AssertJ for fluent assertions
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    
+    // H2 Database for testing
+    testImplementation 'com.h2database:h2:2.2.224'
+    
+    // Main dependencies (if needed)
+    implementation 'com.h2database:h2:2.2.224'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+compileJava {
+    options.release = 17
+}
+
+compileTestJava {
+    options.release = 17
+}
+
+application {
+    mainClass = 'edu.asu.cse360.hw3.HW3Application'
+}
+
+test {
+    useJUnitPlatform()
+    
+    // Fix Java 24 compatibility with Mockito/ByteBuddy
+    jvmArgs = ['-Dnet.bytebuddy.experimental=true']
+    
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = false
+    }
+    
+    reports {
+        html.required = true
+        junitXml.required = true
+    }
+}
+
+javadoc {
+    options {
+        encoding = 'UTF-8'
+        charSet = 'UTF-8'
+        author = true
+        version = true
+        use = true
+        windowTitle = "HW3 Automated Testing Documentation"
+        docTitle = "HW3 - Automated Testing Assignment"
+        bottom = "Copyright © 2025 CSE 360 Student. All rights reserved."
+        
+        // Include test sources in Javadoc
+        source = sourceSets.main.allJava + sourceSets.test.allJava
+        classpath = configurations.testCompileClasspath
+        
+        // Custom tags for test documentation
+        tags = [
+            'testCase:a:Test Case:',
+            'precondition:a:Precondition:',
+            'postcondition:a:Postcondition:',
+            'expectedResult:a:Expected Result:'
+        ]
+    }
+    
+    include '**/test/**'
+    include '**/main/**'
+    
+    destinationDir = file("$buildDir/docs/javadoc")
+}
+
+// Custom task to generate test-specific Javadoc
+task testJavadoc(type: Javadoc) {
+    description = 'Generate Javadoc for test classes'
+    group = 'documentation'
+    
+    source = sourceSets.test.allJava
+    classpath = configurations.testCompileClasspath + configurations.compileClasspath
+    destinationDir = file("$buildDir/docs/test-javadoc")
+    
+    options {
+        encoding = 'UTF-8'
+        charSet = 'UTF-8'
+        author = true
+        version = true
+        use = true
+        windowTitle = "HW3 Test Documentation"
+        docTitle = "HW3 - Automated Tests Documentation"
+        bottom = "Copyright © 2025 CSE 360 Student. All rights reserved."
+        
+        tags = [
+            'testCase:a:Test Case:',
+            'precondition:a:Precondition:',
+            'postcondition:a:Postcondition:',
+            'expectedResult:a:Expected Result:'
+        ]
+    }
+}
+
+// Ensure test Javadoc is generated with main Javadoc
+javadoc.dependsOn testJavadoc
+
+// Custom task to run tests with detailed output
+task testReport(type: Test) {
+    description = 'Run tests with detailed reporting'
+    group = 'verification'
+    
+    useJUnitPlatform()
+    
+    testLogging {
+        events "started", "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = true
+        showCauses = true
+        showExceptions = true
+    }
+    
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "\n--- Test Results ---"
+            println "Tests run: ${result.testCount}"
+            println "Passed: ${result.successfulTestCount}"
+            println "Failed: ${result.failedTestCount}"
+            println "Skipped: ${result.skippedTestCount}"
+            println "Success rate: ${result.successfulTestCount / result.testCount * 100}%"
+            println "-------------------"
+        }
+    }
+}
