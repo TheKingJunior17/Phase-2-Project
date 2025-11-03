@@ -2,7 +2,7 @@
 
 ## Cover Page
 
-**Student Name**: [Your Name]  
+**Student Name**: Jose Mendoza  
 **Course**: CSE 360 - Introduction to Software Engineering  
 **Assignment**: HW3 - Automated Testing with Javadoc Documentation  
 **Date**: November 2, 2025  

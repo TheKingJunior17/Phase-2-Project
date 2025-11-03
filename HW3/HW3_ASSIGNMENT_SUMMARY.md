@@ -1,38 +1,6 @@
 # HW3 Assignment - Automated Testing with Javadoc Documentation
 
-## Assignment Overview
-This assignment focuses on automated testing, JUnit framework exploration, and professional Javadoc documentation. Each student must implement five automated tests with comprehensive documentation.
 
-## 📋 Assignment Tasks Checklist
-
-### ✅ Task 1: Cover Page (5%)
-- [x] Student name and information completed
-- [x] Assignment details filled out
-
-### ✅ Task 2: Test Allocation Documentation (5%)
-- [x] Five automated tests identified and documented
-- [x] Team collaboration on test distribution
-
-### ✅ Task 3: Automated Test Implementation (40%)
-- [x] Five automated tests designed and implemented (20%)
-- [x] Tests verified to work correctly (10%)
-- [x] Internal documentation equivalent to examples (5%)
-- [x] Professional code formatting (5%)
-
-### ✅ Task 4: Javadoc Documentation (30%)
-- [x] Professional Javadoc examples identified (15%)
-- [x] Source link and explanation provided (5%)
-- [x] Javadoc output for automated tests (5%)
-- [x] Javadoc output for test mainlines (5%)
-
-### ✅ Task 5: Screencast and Repository (35%)
-- [x] Code demonstration and explanation (10%)
-- [x] Clear, audible presentation (10%)
-- [x] Automated test explanations (10%)
-- [x] GitHub repository storage (5%)
-- [x] Professional code formatting in repository (10%)
-
----
 
 ## 🎯 HW3 Implementation Summary
 
